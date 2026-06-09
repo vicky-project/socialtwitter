@@ -1,0 +1,11 @@
+{
+    "name": "SocialTwitter",
+    "alias": "socialtwitter",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\SocialTwitter\\Providers\\SocialTwitterServiceProvider"
+    ],
+    "files": []
+}

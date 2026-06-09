@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/socialtwitter",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\SocialTwitter\\": "app/",
+            "Modules\\SocialTwitter\\Database\\Factories\\": "database/factories/",
+            "Modules\\SocialTwitter\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\SocialTwitter\\Tests\\": "tests/"
+        }
+    }
+}
