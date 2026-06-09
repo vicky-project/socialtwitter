@@ -3,6 +3,7 @@
 namespace Modules\SocialTwitter\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
@@ -21,17 +22,20 @@ class SocialTwitterServiceProvider extends ServiceProvider
   */
   public function boot(): void
   {
-    if (Module::has("SocialAccount") && Module::isEnabled("SocialAccount") && class_exists($managerService = \Modules\SocialAccount\Services\SocialProviderManager::class)) {
-      $manager = app($managerService);
-      $manager->register(new TwitterProvider());
-    }
-
     $this->registerCommands();
     $this->registerCommandSchedules();
     $this->registerTranslations();
     $this->registerConfig();
     $this->registerViews();
     $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+
+    if (Module::has("SocialAccount") && Module::isEnabled("SocialAccount") && class_exists($managerService = \Modules\SocialAccount\Services\SocialProviderManager::class)) {
+      $manager = app($managerService);
+      $manager->register(new TwitterProvider());
+      Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
+        $event->extendSocialite('twitter', \SocialiteProviders\Twitter\Provider::class, \SocialiteProviders\Twitter\Server::class);
+      });
+    }
 
     $this->mergeConfigFrom(module_path($this->name, 'config/twitter.php'), 'services');
   }
